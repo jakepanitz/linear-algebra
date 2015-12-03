@@ -48,7 +48,7 @@ class Vector
 
     add: (args...) ->
         args.push @
-        console.log @Vector.add.apply(null, [@, args])
+        console.log Vector.add.apply(null, [@, args])
 
     # Returns the vector sum of the first vector and the negation of all others.
     @sub: (args...) ->
