@@ -1,0 +1,19 @@
+{
+  "name": "linear-algebra",
+  "version": "1.0.0",
+  "description": "Linear Algebra Library",
+  "main": "vector.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jakepanitz/linear-algebra.git"
+  },
+  "author": "Jake Panitz",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jakepanitz/linear-algebra/issues"
+  },
+  "homepage": "https://github.com/jakepanitz/linear-algebra#readme"
+}
