@@ -7,7 +7,7 @@ class Vector
         if args.length is 1 and Array.isArray args[0]
             for elem in args[0]
                 if isNaN elem
-                    console.log "Error: '" + elem + "' is not a number. Could not construct vector."
+                    throw "Error: '" + elem + "' is not a number. Could not construct vector."
                     delete @elements
                     return
             @elements = args[0]
@@ -17,7 +17,7 @@ class Vector
         # push every argument into element array, return and log error if NaN
         for arg in args
             if isNaN arg
-                console.log "Error: '" + arg + "' is not a number. Could not construct vector."
+                throw "Error: '" + arg + "' is not a number. Could not construct vector."
                 delete @elements
                 return
             @elements.push arg
@@ -32,7 +32,7 @@ class Vector
     @add: (args...) ->
         # Check if all vector lengths are equal and return null if they are not.
         if !@assertEqualLength.apply(this, args)
-            console.log "Error: Cannot add vectors of unequal length."
+            throw "Error: Cannot add vectors of unequal length."
             return null
         # Define length of vector - They are all the same so getting the first is sufficient.
         vectorLength = args[0].length
@@ -47,8 +47,12 @@ class Vector
         return new Vector(vectorSum)
 
     add: (args...) ->
-        args.push @
-        console.log Vector.add.apply(null, [@, args])
+        args.unshift @
+        @elements = Vector.add.apply(Vector, args).elements
+
+    sub: (args...) ->
+        args.unshift @
+        @elements = Vector.sub.apply(Vector, args).elements
 
     # Returns the vector sum of the first vector and the negation of all others.
     @sub: (args...) ->
