@@ -7,14 +7,15 @@ describe 'Empty Vector Construction []', ->
     it 'should have a length of 0', ->
         vec1.length.should.equal 0
     it 'elements should equal []', ->
-        vec1.elements.join().should.equal [].join()
+        vec1.elements.should.eql []
 
 describe 'Simple Vector Construction [1,2,3,4,5]', ->
     vec1 = new Vector 1,2,3,4,5
     it 'should have a length of 5', ->
         vec1.length.should.equal 5
     it 'elements should equal [1,2,3,4,5]', ->
-        vec1.elements.join().should.equal [1,2,3,4,5].join()
+        vec1.elements.should.eql [1,2,3,4,5]
+
 describe 'Static Vector Operations', ->
     vec1 = new Vector 1,2,3,4,5
     vec2 = new Vector 1,1,1,1,1
@@ -36,3 +37,12 @@ describe 'Member Vector Operations', ->
     it '[2,3,4,5,6] - [1,1,1,1,1] should equal [1,2,3,4,5]', ->
         vec1.sub vec2
         vec1.elements.join().should.equal [1,2,3,4,5].join()
+
+describe 'Magnitude and Direction', ->
+    vec1 = new Vector 2,3,5
+    vec2 = new Vector 1, 3, -4
+    it 'Magnitude of [2,3,5] should equal 6.16', ->
+        parseFloat(vec1.magnitude().toPrecision(3)).should.equal 6.16
+
+    it 'Normalized Vector of [1,3,-4] should equal [0.34,0.53,-0.777]', ->
+        vec2.normalized().elements.should.have.members [-0.20,0.59,-0.78]

@@ -1,5 +1,8 @@
 class Vector
     # Vector constructor - takes any amount of numbers as arguments. Fails if any NaN are recieved.
+
+    # Constructors ---------------------------------------------------------------------------------
+
     constructor: (args...) ->
         # initialize empty elements array
         @elements = []
@@ -24,9 +27,48 @@ class Vector
         # initialize and define vector length
         @length = args.length
 
+    # ------------------------------------------------------------------------------------------
+
+
+
+    # Member Functions -----------------------------------------------------------------------------
+
+    add: (args...) ->
+        args.unshift @
+        @elements = Vector.add.apply(Vector, args).elements
+
+    sub: (args...) ->
+        args.unshift @
+        @elements = Vector.sub.apply(Vector, args).elements
+
     multiply: (multiple) ->
         for elemIndex in [0..@elements.length-1]
             @elements[elemIndex] *= multiple
+
+    magnitude: () ->
+        sum = 0
+        for elem in @elements
+            sum += Math.pow elem, 2
+        return Math.sqrt sum
+
+    normalized: () ->
+        normalizedVector = []
+        for elem in @elements
+            normalizedVector.push 1/@magnitude()*elem
+        return new Vector normalizedVector
+
+    toPrecision: (p) ->
+        precisionVector = []
+        for elem in @elements
+            precisionVector.push elem.toPrecision(p)
+        console.log precisionVector
+        return new Vector precisionVector
+
+    # ----------------------------------------------------------------------------------------------
+
+
+
+    # Static Functions -----------------------------------------------------------------------------
 
     # Returns vector sum, returns d if vectors are of unequal length
     @add: (args...) ->
@@ -45,14 +87,6 @@ class Vector
             vectorSum.push sum
         # return vector sum
         return new Vector(vectorSum)
-
-    add: (args...) ->
-        args.unshift @
-        @elements = Vector.add.apply(Vector, args).elements
-
-    sub: (args...) ->
-        args.unshift @
-        @elements = Vector.sub.apply(Vector, args).elements
 
     # Returns the vector sum of the first vector and the negation of all others.
     @sub: (args...) ->
@@ -82,6 +116,8 @@ class Vector
         for elem in vector.elements
             negatedVector.push -elem
         return new Vector(negatedVector)
+
+    # ----------------------------------------------------------------------------------------------
 
 
 module.exports = Vector
