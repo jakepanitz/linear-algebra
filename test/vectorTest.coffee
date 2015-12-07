@@ -27,6 +27,19 @@ describe 'Static Vector Operations', ->
         Vector.sub(vec1,vec2).elements.join().should.equal [0,1,2,3,4].join()
     it '[1,2,3,4,5] + [1,1,1,1,1] + [5,4,3,2,1] + [10,20,30,40,50] should equal [17,27,37,47,57] ', ->
         Vector.add(vec1,vec2,vec3,vec4).elements.join().should.equal [17,27,37,47,57].join()
+    it '[1,2,3,4,5] * [1,1,1,1,1] should equal 15', ->
+        Vector.dotProduct(vec1, vec2).should.equal 15
+
+describe 'Static Vector Comparisons', ->
+    vec1 = new Vector(1,2,3,4,5)
+    vec2 = new Vector(2,4,6,8,10)
+    vec3 = new Vector(1,1,1,1,1)
+
+    it '[1,2,3,4,5] should be parallel to [2,4,6,8,10]', ->
+        Vector.areParallel(vec1, vec2).should.be.true
+
+    it '[1,2,3,4,5] should not be parallel to [1,1,1,1,1]', ->
+        Vector.areParallel(vec1, vec3).should.be.false
 
 describe 'Member Vector Operations', ->
     vec1 = new Vector 1,2,3,4,5
@@ -43,6 +56,3 @@ describe 'Magnitude and Direction', ->
     vec2 = new Vector 1, 3, -4
     it 'Magnitude of [2,3,5] should equal 6.16', ->
         parseFloat(vec1.magnitude().toPrecision(3)).should.equal 6.16
-
-    it 'Normalized Vector of [1,3,-4] should equal [0.34,0.53,-0.777]', ->
-        vec2.normalized().elements.should.have.members [-0.20,0.59,-0.78]

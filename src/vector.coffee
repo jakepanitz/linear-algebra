@@ -115,7 +115,39 @@ class Vector
         # push each negated element into negated vector array
         for elem in vector.elements
             negatedVector.push -elem
-        return new Vector(negatedVector)
+        return new Vector negatedVector
+
+    # Get dot product of two vectors
+    @dotProduct: (vector1, vector2) ->
+        if !@assertEqualLength vector1,vector2
+            throw "Error: Cannot find dot product of vectors of unequal length."
+            return null
+        sum = 0
+        for elem in [0..vector1.length-1]
+            sum += vector1.elements[elem] * vector2.elements[elem]
+        return sum
+
+    # Get angle between two vectors in radians
+    @angleBetween: (vector1, vector2) ->
+        dotProduct = @dotProduct(vector1, vector2)
+        magProduct = vector1.magnitude() * vector2.magnitude()
+        return Math.acos(dotProduct / magProduct)
+
+    # return true if parallel, false if not
+    @areParallel: (vector1, vector2) ->
+        scale = vector1.elements[0] / vector2.elements[0]
+        for elem in [1..vector1.length-1]
+            if (vector1.elements[elem] / vector2.elements[elem]).toFixed(3) != scale.toFixed(3)
+                return false
+        return true
+
+    # return true if orthogonal, false if not
+    @areOrthogonal: (vector1, vector2) ->
+        if Math.abs(@dotProduct(vector1,vector2).toFixed(3)) == 0.toFixed(3)
+            return true
+        return false
+
+
 
     # ----------------------------------------------------------------------------------------------
 
